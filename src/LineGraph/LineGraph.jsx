@@ -49,7 +49,7 @@ const options = {
 
 }
 const buildChartData = (data, casesType) => {
-    debugger
+
     const chartData = []
     let lastDataPoint
 
@@ -59,7 +59,6 @@ const buildChartData = (data, casesType) => {
                 x: date,
                 y: data[casesType][date] - lastDataPoint
             }
-            debugger
             chartData.push(newDataPoint)
         }
         lastDataPoint = data[casesType][date]
@@ -67,13 +66,13 @@ const buildChartData = (data, casesType) => {
     return chartData
 }
 
-export default function LineGraph({ casesType = "cases" }) {
+export default function LineGraph({ casesType = "cases", ...props }) {
 
     const [data, setData] = useState({})
 
     useEffect(() => {
         const fetchData = async () => {
-            await fetch("https://disease.sh/v3/covid-19/historical/all?lastdays=120")
+            await fetch("https://disease.sh/v3/covid-19/historical/all?lastdays=30")
                 .then((response) => {
                     return response.json()
                 })
@@ -87,8 +86,7 @@ export default function LineGraph({ casesType = "cases" }) {
 
 
     return (
-        <div>
-            <h1>I am Graph</h1>
+        <div className={props.className}>
             {data.length > 0 &&
                 <Line options={options}
                     data={{
