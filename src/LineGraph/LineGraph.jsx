@@ -14,7 +14,7 @@ const options = {
     },
     maintainAspectRatio: false,
     tooltips: {
-        mode: "index",
+        mode: "nearest",
         intersect: false,
         callbacks: {
             label: function (tooltipItem, data) {
@@ -32,7 +32,7 @@ const options = {
                 },
             }
         ],
-        xAxes: [
+        yAxes: [
             {
                 gridLines: {
                     display: false,
@@ -49,6 +49,7 @@ const options = {
 
 }
 const buildChartData = (data, casesType) => {
+    debugger
     const chartData = []
     let lastDataPoint
 
@@ -58,6 +59,7 @@ const buildChartData = (data, casesType) => {
                 x: date,
                 y: data[casesType][date] - lastDataPoint
             }
+            debugger
             chartData.push(newDataPoint)
         }
         lastDataPoint = data[casesType][date]
@@ -87,7 +89,7 @@ export default function LineGraph({ casesType = "cases" }) {
     return (
         <div>
             <h1>I am Graph</h1>
-            {data?.length > 0 &&
+            {data.length > 0 &&
                 <Line options={options}
                     data={{
                         datasets: [
