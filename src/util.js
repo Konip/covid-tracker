@@ -5,20 +5,23 @@ import "./Map/Map.css"
 
 const casesTypeColors = {
     cases: {
-        hex: "#CC1034",
+        color: "#CC1034",
+        fillColor: "#CC1034",
         multiplier: 300,
     },
     recovered: {
-        hex: "#7dd71d",
         multiplier: 450,
+        color: "#7dd71d",
+        fillColor: "#7dd71d"
     },
     deaths: {
-        hex: "#fb4443",
         multiplier: 1900,
+        color: "#4b1414",
+        fillColor: "#4b1414"
     },
 }
 export const prettyPrintStat = (stat) =>
-stat ? `+${numeral(stat).format("0,0a")}`:"+0"
+    stat ? `+${numeral(stat).format("0,0a")}` : "+0"
 
 export const sortData = (data) => {
     const sortedData = [...data]
@@ -34,10 +37,10 @@ export const sortData = (data) => {
     return sortedData
 }
 // рисует круги на карте
-export const showDataOnMap = (data, casesType = "cases") => (
-    data.map(country => (
-        <Circle center={[country.countryInfo.lat, country.countryInfo.long]} fillOpacity={0.4}
-            color={casesTypeColors[casesType].hex} fillColor={casesTypeColors[casesType].hex}
+export const showDataOnMap = (data, casesType) => (
+    data.map((country, index) => (
+        <Circle key={index} center={[country.countryInfo.lat, country.countryInfo.long]} fillOpacity={0.4}
+            pathOptions={casesTypeColors[casesType]}
             radius={Math.sqrt(country[casesType]) * casesTypeColors[casesType].multiplier}
         >
             <Popup>

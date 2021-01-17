@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
-import { FormControl, Select, MenuItem, Card, CardContent, Typography } from '@material-ui/core';
+import { FormControl, Select, MenuItem, Card, CardContent } from '@material-ui/core';
 import InfoBox from './InfoBox/InfoBox';
 import Map from './Map/Map';
 import Table from './Table/Table';
@@ -12,7 +12,7 @@ import "leaflet/dist/leaflet.css"
 function App() {
 
   const [countries, setCountries] = useState([])
-  const [country, setCountry] = useState('worldwide')
+  const [country, setCountryCode] = useState('worldwide')
   const [countryInfo, setCountryInfo] = useState({})
   const [tableData, setTableData] = useState([])
   const [mapCenter, setMapCenter] = useState({ lat: 34.80746, lng: -40.4796 })
@@ -47,12 +47,12 @@ function App() {
         })
     }
     getCountriesData()
-  }, [])
+  }, )
 
 
   const onContryChange = async (event) => {
     const contryCode = event.target.value
-    setCountry(contryCode)
+    setCountryCode(contryCode)
 
     const url = contryCode === "worldwide"
       ? "https://disease.sh/v3/covid-19/countries/all"
@@ -61,11 +61,11 @@ function App() {
     await fetch(url)
       .then(response => response.json())
       .then(data => {
-        setCountry(contryCode)
+        setCountryCode(contryCode)
         setCountryInfo(data)
 
         setMapCenter([data.countryInfo.lat, data.countryInfo.long])
-        setMapZoom(4)
+        setMapZoom(6)
       })
   }
 
