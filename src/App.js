@@ -1,12 +1,12 @@
+import { Card, CardContent, FormControl, MenuItem, Select } from '@material-ui/core';
+import "leaflet/dist/leaflet.css";
 import React, { useEffect, useState } from 'react';
 import './App.css';
-import { FormControl, Select, MenuItem, Card, CardContent } from '@material-ui/core';
 import InfoBox from './InfoBox/InfoBox';
+import LineGraph from './LineGraph/LineGraph';
 import Map from './Map/Map';
 import Table from './Table/Table';
-import { sortData, prettyPrintStat } from './util';
-import LineGraph from './LineGraph/LineGraph';
-import "leaflet/dist/leaflet.css"
+import { prettyPrintStat, sortData } from './util';
 
 
 function App() {
@@ -47,7 +47,7 @@ function App() {
         })
     }
     getCountriesData()
-  }, )
+  },[] )
 
 
   const onContryChange = async (event) => {
@@ -55,7 +55,7 @@ function App() {
     setCountryCode(contryCode)
 
     const url = contryCode === "worldwide"
-      ? "https://disease.sh/v3/covid-19/countries/all"
+      ? "https://disease.sh/v3/covid-19/all"
       : `https://disease.sh/v3/covid-19/countries/${contryCode}`
 
     await fetch(url)
@@ -63,7 +63,6 @@ function App() {
       .then(data => {
         setCountryCode(contryCode)
         setCountryInfo(data)
-
         setMapCenter([data.countryInfo.lat, data.countryInfo.long])
         setMapZoom(6)
       })

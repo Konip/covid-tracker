@@ -36,7 +36,7 @@ export const sortData = (data) => {
     })
     return sortedData
 }
-// рисует круги на карте
+
 export const showDataOnMap = (data, casesType) => (
     data.map((country, index) => (
         <Circle key={index} center={[country.countryInfo.lat, country.countryInfo.long]} fillOpacity={0.4}
